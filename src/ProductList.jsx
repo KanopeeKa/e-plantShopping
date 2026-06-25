@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { addItem } from './CartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import './ProductList.css';
 import CartItem from './CartItem';
+import { addItem } from './CartSlice';
 
 function ProductList({ onHomeClick }) {
   const dispatch = useDispatch();
@@ -276,6 +276,12 @@ function ProductList({ onHomeClick }) {
       useEffect(() => {
         setShowPlants(true);
       }, []);
+
+    const CartItems = useSelector((state) => state.cart.items);
+
+    const calculateTotalQuantity = () => {
+        return CartItems? CartItems.reduce((total, item) => total + item.quantity, 0): 0;
+    };
     
       return (
         <div>
@@ -325,6 +331,7 @@ function ProductList({ onHomeClick }) {
                         id="mainIconPathAttribute"
                       ></path>
                     </svg>
+                    
                   </h1>
                 </a>
               </div>
